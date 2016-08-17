@@ -1,6 +1,7 @@
 package nshindarev.copydiff.appl;
 
 import nshindarev.copydiff.appl.config.Parameters;
+import nshindarev.copydiff.appl.service.CopyDiff;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class Main {
         logger.info("Application started.");
         Parameters parameters = parseParameters(args);
         if (parameters != null) {
+            CopyDiff.process(parameters);
         }
         logger.info("Application completed.");
     }
