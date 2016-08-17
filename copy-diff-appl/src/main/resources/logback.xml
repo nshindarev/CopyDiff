@@ -9,7 +9,8 @@
         </encoder>
     </appender>
 
-    <logger name="nshindarev.copydiff"              level="trace"  additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="nshindarev.copydiff"                         level="trace"  additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="nshindarev.copydiff.appl.service.CopyDiff"   level="info"   additivity="false"><appender-ref ref="STDOUT"/></logger>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
