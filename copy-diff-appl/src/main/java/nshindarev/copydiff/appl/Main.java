@@ -40,8 +40,9 @@ public class Main {
 
         Parameters parameters = new Parameters();
         boolean params = true;
+        CommandLine cl = null;
         try {
-            CommandLine cl = new DefaultParser().parse(options, args);
+            cl = new DefaultParser().parse(options, args);
             for (String dir : new String[] {sourceDirParam, targetDirParam, destDirParam}) {
                 if (!cl.hasOption(dir)) {
                     logger.error("Не задан параметр {}", dir);
@@ -68,14 +69,15 @@ public class Main {
                 parameters.setDestDir(destDir);
                 parameters.setTargetDir(Paths.get(cl.getOptionValue(targetDirParam)));
             }
-            if (cl.hasOption("h") || cl.hasOption("help") || !params) {
-                HelpFormatter helpFormatter = new HelpFormatter();
-                helpFormatter.setWidth(132);
-                helpFormatter.printHelp(" аргументы для запуска утилиты", options);
-                return null;
-            }
         } catch (ParseException pe) {
-            logger.error("Не удаётся разобрать строку параметров", pe);
+            logger.error("Не удаётся разобрать строку параметров: {}", pe.getLocalizedMessage());
+            params = false;
+        }
+        if (cl == null || cl.hasOption("h") || cl.hasOption("help") || !params) {
+            HelpFormatter helpFormatter = new HelpFormatter();
+            helpFormatter.setWidth(132);
+            helpFormatter.printHelp(" аргументы для запуска утилиты", options);
+            return null;
         }
         logger.debug("Parameters: {}", parameters.toString());
         return parameters.isComplete() ? parameters : null;
