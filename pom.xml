@@ -11,6 +11,7 @@
     <modules>
         <module>copy-diff-appl</module>
         <module>copy-diff-search</module>
+        <module>copy-diff-test</module>
     </modules>
 
     <properties>
