@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>copy-diff-appl</module>
+        <module>copy-diff-search</module>
         <module>copy-diff-test</module>
     </modules>
 
