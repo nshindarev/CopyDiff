@@ -14,6 +14,7 @@
     <properties>
         <commons-cli.version>1.3.1</commons-cli.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+        <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
     </properties>
 
     <dependencies>
@@ -44,6 +45,24 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <!-- <excludeArtifactIds></excludeArtifactIds> -->
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>bin</id>
+                        <configuration>
+                            <descriptor>src/assembly/bin.xml</descriptor>
+                            <finalName>${parent.artifactId}-${project.version}</finalName>
+                        </configuration>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

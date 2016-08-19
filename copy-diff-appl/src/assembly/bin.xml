@@ -1,0 +1,43 @@
+<assembly>
+    <id>bin</id>
+    <!-- START SNIPPET: formats -->
+    <formats>
+        <format>zip</format>
+    </formats>
+    <!-- END SNIPPET: formats -->
+    <!-- START SNIPPET: fileSets -->
+    <fileSets>
+        <fileSet>
+            <directory>target/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <include>logback.xml</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>ReadMe.md</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+        </fileSet>
+    </fileSets>
+    <!-- END SNIPPET: fileSets -->
+</assembly>
