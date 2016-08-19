@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Log Message format -->
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%green(%date{ISO8601}) [%24thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="nshindarev.copydiff"                         level="trace"  additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="nshindarev.copydiff.appl.service.CopyDiff"   level="info"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
