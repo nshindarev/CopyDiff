@@ -63,7 +63,7 @@ public class CopyDiffFileProcessor implements Checker {
                     if (destFileDir.mkdirs()) {
                         logger.debug("Папка '{}' успешно создана", destFileDir.getAbsolutePath());
                     } else {
-                        logger.error("Не удалось создать папку при попытке скопировать файл: {}", parameters.getDestPath());
+                        logger.error("Не удалось создать папку при попытке скопировать файл: {}'", parameters.getDestPath());
                     }
                 }
                 if (destFileDir.exists()) {
@@ -71,7 +71,7 @@ public class CopyDiffFileProcessor implements Checker {
                     logger.debug("Файл '{}' успешно скопирован.", parameters.getSourcePath().toFile().getAbsolutePath());
                 }
             } catch (IOException e) {
-                logger.error("Не удалось скопировать файл '{}' как '{}", parameters.getSourcePath().toFile().getAbsolutePath(), parameters.getDestPath().toFile().getAbsolutePath());
+                logger.error("Не удалось скопировать файл '{}' как '{}'", parameters.getSourcePath().toFile().getAbsolutePath(), parameters.getDestPath().toFile().getAbsolutePath());
             }
         }
     }
