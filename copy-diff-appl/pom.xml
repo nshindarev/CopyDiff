@@ -43,7 +43,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <!-- <excludeArtifactIds></excludeArtifactIds> -->
+                            <excludeArtifactIds>junit,hamcrest-core</excludeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
