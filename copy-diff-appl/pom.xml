@@ -57,7 +57,7 @@
                         <id>bin</id>
                         <configuration>
                             <descriptor>src/assembly/bin.xml</descriptor>
-                            <finalName>${parent.artifactId}-${project.version}</finalName>
+                            <finalName>${project.parent.artifactId}-${project.version}</finalName>
                         </configuration>
                         <phase>package</phase>
                         <goals>
