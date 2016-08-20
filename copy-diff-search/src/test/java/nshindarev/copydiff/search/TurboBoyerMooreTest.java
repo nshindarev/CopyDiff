@@ -62,9 +62,8 @@ public class TurboBoyerMooreTest {
         ByteBuffer bb = ByteBuffer.allocate(n*2 - j);
         // Записываем в новый буфер оставшуюся часть и дописываем тем же значением.
         // Теперь искомый pattern должен появиться в буфере в результате склейки
-        bb.put(bbr).put(buff);
-        byte[] buff = bb.array();
-        result = pattern.findOne(ByteBuffer.wrap(buff));
+        bb.put(bbr).put(buff).clear();
+        result = pattern.findOne(bb);
         Assert.assertTrue("Подстрока должна быть обнаружена в позиции 3", result.getValue().size() > 0 && result.getValue().get(0).equals(3));
     }
 
