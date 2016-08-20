@@ -17,6 +17,7 @@
     4. [Делаем релизы с помощью Maven в Java](https://habrahabr.ru/post/130936/)
     5. [Apache Maven — основы](https://habrahabr.ru/post/77382/)
     6. [Как исключить logback.xml из jar файла](https://www.mkyong.com/maven/maven-exclude-logback-xml-in-jar-file/)
+    7. [Maven, exclude hamcrest dependency for junit](http://stackoverflow.com/questions/35027292/maven-exclude-hamcrest-dependency-for-junit)
 
 4. Markdown
     1. [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links)
