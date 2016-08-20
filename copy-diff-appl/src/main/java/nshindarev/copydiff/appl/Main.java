@@ -61,7 +61,7 @@ public class Main {
                 if (Files.notExists(sourceDir)) {
                     logger.warn("Не существует папка, заданная параметром {}: '{}'", sourceDirParam, cl.getOptionValue(sourceDirParam));
                 }
-                parameters.setSourceDir(sourceDir);
+                parameters.setSourcePath(sourceDir);
                 // destDir
                 Path destDir = Paths.get(cl.getOptionValue(destDirParam));
                 if (!Files.exists(destDir)) {
@@ -72,8 +72,8 @@ public class Main {
                         destDir = null;
                     }
                 }
-                parameters.setDestDir(destDir);
-                parameters.setTargetDir(Paths.get(cl.getOptionValue(targetDirParam)));
+                parameters.setDestPath(destDir);
+                parameters.setTargetPath(Paths.get(cl.getOptionValue(targetDirParam)));
             }
         } catch (ParseException pe) {
             logger.error("Не удаётся разобрать строку параметров: {}", pe.getLocalizedMessage());
