@@ -17,16 +17,27 @@ public class Shakespeare {
     public static final String shakespeareRelativePath = "/copy-diff-test/src/test/resources/shakespeare.txt";
     public static final String sourceRelativePath      = "/copy-diff-test/src/main/java/nshindarev/copydiff/test/Shakespeare.java";
 
+    // Находим файл по заданному relativePath от корня проекта
     public static Path path(String relativePath) {
         assert relativePath != null;
-        File path = new File(new File("").getAbsolutePath());
-        // Находим файл shakespeare.txt в тестовом модуле
-        while (!path.getName().equals(rootFolderName) && path.getParent() != null) {
-            path = path.getParentFile();
+        File currentPath = new File("");
+        // Бежим по дереву проекта от текущего директория вверх пока не найдём корень проекта или не получим null
+        for (File path = new File(currentPath.getAbsolutePath()); path != null; path = path.getParentFile()) {
+            // Если имя проекта не изменилось и мы стоим на папке проекта
+            // или если текущая папка содержит папку модуля 'copy-difff-test',
+            // то выставляем текущую папку как искомую
+            if ( path.getName().equals("CopyDiff") ||
+                 new File(path, "copy-diff-test").isDirectory() )
+            {
+                currentPath = path;
+                break;
+            }
         }
-        return Paths.get(new StringBuilder(path.getAbsolutePath()).append(relativePath).toString());
+        // Если не нашли - пытаемся
+        return Paths.get(new StringBuilder(currentPath.getAbsolutePath()).append(relativePath).toString());
     }
 
+    // Находим файл shakespeare.txt в тестовом модуле
     public static Path shakespeare() {
         return path(shakespeareRelativePath);
     }
