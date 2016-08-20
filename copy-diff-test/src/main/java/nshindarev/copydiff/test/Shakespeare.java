@@ -13,7 +13,8 @@ import java.nio.file.Paths;
  */
 public class Shakespeare {
 
-    public static final String rootFolderName          = "CopyDiff";
+    public static final String projectFolderName       = "CopyDiff";
+    public static final String moduleFolderName        = "copy-diff-test";
     public static final String shakespeareRelativePath = "/copy-diff-test/src/test/resources/shakespeare.txt";
     public static final String sourceRelativePath      = "/copy-diff-test/src/main/java/nshindarev/copydiff/test/Shakespeare.java";
 
@@ -26,8 +27,8 @@ public class Shakespeare {
             // Если имя проекта не изменилось и мы стоим на папке проекта
             // или если текущая папка содержит папку модуля 'copy-difff-test',
             // то выставляем текущую папку как искомую
-            if ( path.getName().equals("CopyDiff") ||
-                 new File(path, "copy-diff-test").isDirectory() )
+            if ( path.getName().equals(projectFolderName) ||
+                 new File(path, moduleFolderName).isDirectory() )
             {
                 currentPath = path;
                 break;
