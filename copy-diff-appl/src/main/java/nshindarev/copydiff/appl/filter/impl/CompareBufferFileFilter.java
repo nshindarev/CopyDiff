@@ -42,6 +42,7 @@ public class CompareBufferFileFilter implements BufferFileFilter, CompleteFilter
         } catch (IOException ioe) {
             logger.error("Ошибка чтения из файла для сравнения '{}'", parameters.getTargetPath().toFile().getAbsolutePath(), ioe);
             checker.reject(this);
+            close(parameters);
             return null;
         }
         // Если нашли различие в файле
@@ -49,6 +50,7 @@ public class CompareBufferFileFilter implements BufferFileFilter, CompleteFilter
             equals = false;
             logger.debug("Найдены различия файла '{}' при сравнении с содержимым шаблона", parameters.getSourcePath().toFile().getAbsolutePath());
             checker.approve(this);
+            close(parameters);
             return null;
         }
         return targetBuffer.limit();
@@ -61,6 +63,19 @@ public class CompareBufferFileFilter implements BufferFileFilter, CompleteFilter
             logger.debug("Содержимое файла '{}' совпадает с содержимым шаблона", parameters.getSourcePath().toFile().getAbsolutePath());
             checker.reject(this);
         }
+        close(parameters);
+    }
+
+    private void close(Parameters parameters) {
+        if (targetFileChannel != null && targetFileChannel.isOpen()) {
+            try {
+                targetFileChannel.close();
+            } catch (IOException ioe) {
+                logger.trace("Призошла ошибка при попытке закрыть канал файла '{}'", parameters.getSourcePath().toFile().getAbsolutePath());
+            }
+        }
+        targetFileChannel = null;
+        targetBuffer = null;
     }
 
 }
