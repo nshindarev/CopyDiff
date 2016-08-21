@@ -40,7 +40,7 @@
                 <configuration>
                     <excludes>
                         <exclude>logback.xml</exclude>
-                        <exclude>virus</exclude>
+                        <exclude>virus*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

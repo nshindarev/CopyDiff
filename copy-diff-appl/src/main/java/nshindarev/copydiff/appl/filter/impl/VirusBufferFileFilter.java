@@ -8,13 +8,13 @@ import nshindarev.copydiff.search.TurboBoyerMoore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,6 +60,21 @@ public class VirusBufferFileFilter implements BufferFileFilter {
             baos.write(buff, 0, len);
         }
         return baos.toByteArray();
+    }
+
+    public static List<VirusBufferFileFilter> loadVirusFilters(String configResourceName) {
+        assert configResourceName != null;
+        List<VirusBufferFileFilter> result = new ArrayList<>();
+        InputStream is = VirusBufferFileFilter.class.getClassLoader().getResourceAsStream(configResourceName);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        try {
+            for (String virusResourceName = br.readLine(); virusResourceName != null; virusResourceName = br.readLine()) {
+                result.add(new VirusBufferFileFilter(virusResourceName));
+            }
+        } catch (IOException e) {
+            logger.trace("Ошибка при попытке прочитать из вайла конфигурации списка вирусов");
+        }
+        return result;
     }
 
 }

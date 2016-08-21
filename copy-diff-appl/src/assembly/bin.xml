@@ -43,7 +43,7 @@
             <outputDirectory>conf</outputDirectory>
             <includes>
                 <include>logback.xml</include>
-                <include>virus</include>
+                <include>virus*</include>
             </includes>
             <lineEnding>unix</lineEnding>
         </fileSet>

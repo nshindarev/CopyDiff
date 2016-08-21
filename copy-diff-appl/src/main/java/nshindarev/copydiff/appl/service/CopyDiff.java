@@ -37,7 +37,7 @@ public class CopyDiff {
         filters.add(new DiffFileFilter());
         filters.add(new HiddenFileFilter());
         filters.add(new ExeFileFilter());
-        filters.add(new VirusBufferFileFilter("virus"));
+        filters.addAll(VirusBufferFileFilter.loadVirusFilters("viruses"));
     }
 
     /**
