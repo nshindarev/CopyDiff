@@ -1,9 +1,7 @@
 package nshindarev.copydiff.appl.service;
 
 import nshindarev.copydiff.appl.config.Parameters;
-import nshindarev.copydiff.appl.filter.Checker;
-import nshindarev.copydiff.appl.filter.FileFilter;
-import nshindarev.copydiff.appl.filter.Filter;
+import nshindarev.copydiff.appl.filter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,16 +40,50 @@ public class CopyDiffFileProcessor implements Checker {
     }
 
     public void process() {
+        List<ContinueFilter> continueFilters = processFileFilters();
+
+        checkBuffers(continueFilters);
+
+        checkCompletes(continueFilters);
+
+        copyFile();
+    }
+
+    private List<ContinueFilter> processFileFilters() {
+        List<ContinueFilter> continueFilters = new ArrayList<>();
         // Для начала из всех фильтров применяем те, что реализуют интерфейс FileFilter
         for (Filter filter:filters) {
             if (filter instanceof FileFilter) {
                 if (approved == null || approved) {
                     @SuppressWarnings("unchecked")
                     FileFilter fileFilter = (FileFilter) filter;
-                    fileFilter.check(parameters, this);
+                    ContinueFilter continueFilter = fileFilter.check(parameters, this);
+                    if (continueFilter != null) {
+                        continueFilters.add(continueFilter);
+                    }
                 }
             }
         }
+        return continueFilters;
+    }
+
+    private void checkBuffers(List<ContinueFilter> continueFilters) {
+        // Здесь будет код по обработке содержимого файла
+    }
+
+    private void checkCompletes(List<ContinueFilter> continueFilters) {
+        // Проверяем CompleteFilters
+        for (ContinueFilter continueFilter:continueFilters) {
+            if (continueFilter instanceof CompleteFilter) {
+                @SuppressWarnings("unchecked")
+                CompleteFilter completeFilter = (CompleteFilter)continueFilter;
+                completeFilter.completeCheck(parameters, this);
+            }
+        }
+    }
+
+    private void copyFile() {
+        // Проверяем результат проверок и принимаем решение о копировании файла
         if (approved == null) {
             logger.warn("Невозможно принять решение по файлу ''. Копирование не производится", parameters.getSourcePath().toFile().getAbsolutePath());
         } else if (!approved) {

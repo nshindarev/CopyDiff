@@ -2,11 +2,13 @@ package nshindarev.copydiff.appl.filter.impl;
 
 import nshindarev.copydiff.appl.config.Parameters;
 import nshindarev.copydiff.appl.filter.Checker;
+import nshindarev.copydiff.appl.filter.ContinueFilter;
 import nshindarev.copydiff.appl.filter.FileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by nshindarev on 20.08.16.
@@ -18,7 +20,7 @@ public class DiffFileFilter implements FileFilter {
     // Данный класс проверяет, что файлы source и target совпадают согласно условию задачи
 
     @Override
-    public void check(Parameters parameters, Checker checker) {
+    public ContinueFilter check(Parameters parameters, Checker checker) {
         assert checker != null && parameters!= null;
         File sourceFile = parameters.getSourcePath().toFile();
         File targetFile = parameters.getTargetPath().toFile();
@@ -50,7 +52,14 @@ public class DiffFileFilter implements FileFilter {
             // Если попали сюда, то файлы имеют разное время и одну длину - надо проверить на содержимое (этим будет заниматься
             // фильтр проверки содержимого, когда появится...)
             logger.info("Сравниваемые файлы имеют разную дату. Требуется проверка содержимого.");
+            try {
+                return new CompareBufferFileFilter(parameters);
+            } catch (IOException ioe) {
+                logger.error("Не удалось создать фильтр для сравнения содержимого файла: '{}'", parameters.getSourcePath().toFile().getAbsolutePath());
+                checker.reject(this);
+            }
         }
+        return null;
     }
 
 }
