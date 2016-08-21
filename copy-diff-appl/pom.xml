@@ -23,6 +23,11 @@
             <artifactId>commons-cli</artifactId>
             <version>${commons-cli.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>copy-diff-search</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
