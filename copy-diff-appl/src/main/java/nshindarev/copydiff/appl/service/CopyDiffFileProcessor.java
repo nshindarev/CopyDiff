@@ -62,6 +62,12 @@ public class CopyDiffFileProcessor implements Checker {
                         continueFilters.add(continueFilter);
                     }
                 }
+            } else if (filter instanceof ContinueFilter) {
+                @SuppressWarnings("unchecked")
+                ContinueFilter continueFilter = (ContinueFilter) filter;
+                if (!continueFilters.contains(continueFilter)) {
+                    continueFilters.add(continueFilter);
+                }
             }
         }
         return continueFilters;
