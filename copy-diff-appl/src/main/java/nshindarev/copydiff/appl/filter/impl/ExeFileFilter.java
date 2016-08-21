@@ -2,7 +2,9 @@ package nshindarev.copydiff.appl.filter.impl;
 
 import nshindarev.copydiff.appl.config.Parameters;
 import nshindarev.copydiff.appl.filter.Checker;
+import nshindarev.copydiff.appl.filter.ContinueFilter;
 import nshindarev.copydiff.appl.filter.FileFilter;
+import nshindarev.copydiff.appl.filter.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +20,13 @@ public class ExeFileFilter implements FileFilter {
     // Данный класс не даёт скопировать '.exe' файлы
 
     @Override
-    public void check(Parameters parameters, Checker checker) {
+    public ContinueFilter check(Parameters parameters, Checker checker) {
         assert checker != null && parameters!= null;
         if (parameters.getSourcePath().toFile().getName().toLowerCase().matches("^.*\\.exe$")) {
             logger.info("Reject: EXE файлы не допускаются. Файл '{}' не будет скопирован.", parameters.getSourcePath());
             checker.reject(this);
         }
+        return null;
     }
 
 }
