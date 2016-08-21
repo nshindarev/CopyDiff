@@ -19,5 +19,11 @@
     6. [Как исключить logback.xml из jar файла](https://www.mkyong.com/maven/maven-exclude-logback-xml-in-jar-file/)
     7. [Maven, exclude hamcrest dependency for junit](http://stackoverflow.com/questions/35027292/maven-exclude-hamcrest-dependency-for-junit)
 
-4. Markdown
-    1. [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links)
+5. Разное
+    1. Markdown
+        * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links)
+    2.  Resource As Stream...
+        * [Smartly load your properties](http://www.javaworld.com/article/2077352/java-se/smartly-load-your-properties.html)
+        * [How to Load Resources from Classpath in Java with Example](http://javarevisited.blogspot.com/2014/07/how-to-load-resources-from-classpath-in-java-example.html)
+        * [Java resource loading explained. Absolute and relative names.](http://www.thinkplexx.com/learn/howto/java/system/java-resource-loading-explained-absolute-and-relative-names-difference-between-classloader-and-class-resource-loading)
+        * [Java – Read a file from resources folder](https://www.mkyong.com/java/java-read-a-file-from-resources-folder/)
