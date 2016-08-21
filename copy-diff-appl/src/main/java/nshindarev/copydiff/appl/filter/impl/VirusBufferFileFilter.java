@@ -37,7 +37,7 @@ public class VirusBufferFileFilter implements BufferFileFilter {
 
     // Создаёт фильтр, загружая вирус из файла, находящегося в пути
     public VirusBufferFileFilter(String resourceFileName) throws IOException {
-        this(loadVirusFromStream(VirusBufferFileFilter.class.getClassLoader().getResourceAsStream(resourceFileName)));
+        this(VirusBufferFileFilter.class.getClassLoader().getResourceAsStream(resourceFileName));
     }
 
     @Override
