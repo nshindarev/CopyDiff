@@ -4,11 +4,8 @@ import nshindarev.copydiff.appl.config.Parameters;
 import nshindarev.copydiff.appl.filter.Checker;
 import nshindarev.copydiff.appl.filter.ContinueFilter;
 import nshindarev.copydiff.appl.filter.FileFilter;
-import nshindarev.copydiff.appl.filter.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
 
 /**
  * Created by nshindarev on 20.08.16.

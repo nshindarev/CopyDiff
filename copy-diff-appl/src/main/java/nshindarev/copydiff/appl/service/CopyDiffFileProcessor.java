@@ -1,7 +1,12 @@
 package nshindarev.copydiff.appl.service;
 
 import nshindarev.copydiff.appl.config.Parameters;
-import nshindarev.copydiff.appl.filter.*;
+import nshindarev.copydiff.appl.filter.BufferFileFilter;
+import nshindarev.copydiff.appl.filter.Checker;
+import nshindarev.copydiff.appl.filter.CompleteFilter;
+import nshindarev.copydiff.appl.filter.ContinueFilter;
+import nshindarev.copydiff.appl.filter.FileFilter;
+import nshindarev.copydiff.appl.filter.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

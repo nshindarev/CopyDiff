@@ -43,9 +43,9 @@
             <outputDirectory>conf</outputDirectory>
             <includes>
                 <include>logback.xml</include>
+                <include>virus*</include>
             </includes>
             <lineEnding>unix</lineEnding>
-            <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
             <directory>../</directory>
