@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,20 +30,20 @@ public class CopyDiff {
      * Конструктор скрыт. Доступ производится через static метод обработки
      * @param parameters
      */
-    private CopyDiff(Parameters parameters) {
+    private CopyDiff(Parameters parameters) throws IOException {
         // Предполагается, что без заполненных параметров сюда соваться не надо
         assert parameters != null && parameters.isComplete();
         this.parameters = parameters;
         filters.add(new DiffFileFilter());
         filters.add(new HiddenFileFilter());
         filters.add(new ExeFileFilter());
-        filters.add(new VirusBufferFileFilter(new String("VIRUS").getBytes()));
+        filters.add(new VirusBufferFileFilter("virus"));
     }
 
     /**
      * Запуск процесса выполнения утилиты CopyDiff
      */
-    public static void process(Parameters parameters) {
+    public static void process(Parameters parameters) throws IOException {
         logger.debug("CopyDiff.process[parameters: {}]", parameters);
         // Вызываем рекурсивный обработчик, который пробегает по дереву и вызывает операцию для каждого файла
         new CopyDiff(parameters).processPath(parameters.getSourcePath());

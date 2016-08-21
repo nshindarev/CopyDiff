@@ -10,6 +10,7 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +26,11 @@ public class Main {
         logger.info("Application started.");
         Parameters parameters = parseParameters(args);
         if (parameters != null) {
-            CopyDiff.process(parameters);
+            try {
+                CopyDiff.process(parameters);
+            } catch (IOException e) {
+                logger.error("Произошло исключение во время работы приложения", e);
+            }
         }
         logger.info("Application completed.");
     }

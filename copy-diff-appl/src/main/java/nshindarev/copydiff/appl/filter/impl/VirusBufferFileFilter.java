@@ -8,7 +8,13 @@ import nshindarev.copydiff.search.TurboBoyerMoore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -24,6 +30,16 @@ public class VirusBufferFileFilter implements BufferFileFilter {
         this.tbm = TurboBoyerMoore.compile(virus);
     }
 
+    // Создаёт фильтр, загружая вирус из потока
+    public VirusBufferFileFilter(InputStream is) throws IOException {
+        this(loadVirusFromStream(is));
+    }
+
+    // Создаёт фильтр, загружая вирус из файла, находящегося в пути
+    public VirusBufferFileFilter(String resourceFileName) throws IOException {
+        this(loadVirusFromStream(VirusBufferFileFilter.class.getClassLoader().getResourceAsStream(resourceFileName)));
+    }
+
     @Override
     public Integer bufferCheck(ByteBuffer byteBuffer, long filePosition, Parameters parameters, Checker checker) {
         assert byteBuffer != null;
@@ -34,6 +50,16 @@ public class VirusBufferFileFilter implements BufferFileFilter {
             return null;
         }
         return result.getKey();
+    }
+
+    private static final byte[] loadVirusFromStream(InputStream is) throws IOException {
+        assert is != null;
+        byte[] buff = new byte[1024];
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (int len = is.read(buff); len > 0; len = is.read(buff)) {
+            baos.write(buff, 0, len);
+        }
+        return baos.toByteArray();
     }
 
 }
