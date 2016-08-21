@@ -30,15 +30,16 @@ public class CompareBufferFileFilter implements BufferFileFilter, CompleteFilter
     @Override
     public Integer bufferCheck(ByteBuffer byteBuffer, long filePosition, Parameters parameters, Checker checker) {
         assert byteBuffer != null;
-        // Если буфер ещё не выделялся, то выделяем его размером с переданный в запросе
-        // Не предполагается, что для сравнения будут приходить буфера разного размера
-        if (targetBuffer == null) {
+        // Если буфер ещё не выделялся или меньше обрабатываемого по размеру, то выделяем его размером с переданный
+        // в запросе.
+        if (targetBuffer == null || targetBuffer.capacity() < byteBuffer.capacity()) {
             targetBuffer = ByteBuffer.allocateDirect(byteBuffer.capacity());
         }
         targetBuffer.limit(byteBuffer.limit()-byteBuffer.position());
         targetBuffer.position(0);
         try {
             targetFileChannel.read(targetBuffer, filePosition);
+            targetBuffer.flip();
         } catch (IOException ioe) {
             logger.error("Ошибка чтения из файла для сравнения '{}'", parameters.getTargetPath().toFile().getAbsolutePath(), ioe);
             checker.reject(this);
