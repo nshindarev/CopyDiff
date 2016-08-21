@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by nshindarev on 17.08.16.
  */

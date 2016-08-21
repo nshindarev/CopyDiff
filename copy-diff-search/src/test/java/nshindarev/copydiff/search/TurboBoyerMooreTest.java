@@ -7,15 +7,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +62,8 @@ public class TurboBoyerMooreTest {
         ByteBuffer bb = ByteBuffer.allocate(n*2 - j);
         // Записываем в новый буфер оставшуюся часть и дописываем тем же значением.
         // Теперь искомый pattern должен появиться в буфере в результате склейки
-        bb.put(bbr).put(buff);
-        byte[] buff = bb.array();
-        result = pattern.findOne(ByteBuffer.wrap(buff));
+        bb.put(bbr).put(buff).clear();
+        result = pattern.findOne(bb);
         Assert.assertTrue("Подстрока должна быть обнаружена в позиции 3", result.getValue().size() > 0 && result.getValue().get(0).equals(3));
     }
 
