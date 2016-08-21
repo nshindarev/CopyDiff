@@ -5,6 +5,7 @@ import nshindarev.copydiff.appl.filter.Filter;
 import nshindarev.copydiff.appl.filter.impl.DiffFileFilter;
 import nshindarev.copydiff.appl.filter.impl.ExeFileFilter;
 import nshindarev.copydiff.appl.filter.impl.HiddenFileFilter;
+import nshindarev.copydiff.appl.filter.impl.VirusBufferFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +36,7 @@ public class CopyDiff {
         filters.add(new DiffFileFilter());
         filters.add(new HiddenFileFilter());
         filters.add(new ExeFileFilter());
+        filters.add(new VirusBufferFileFilter(new String("VIRUS").getBytes()));
     }
 
     /**
