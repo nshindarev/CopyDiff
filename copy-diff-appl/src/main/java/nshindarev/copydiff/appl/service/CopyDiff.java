@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Phaser;
 
 /**
  * Created by nshindarev on 17.08.16.
@@ -23,8 +26,10 @@ public class CopyDiff {
 
     private static final Logger logger = LoggerFactory.getLogger(CopyDiff.class);
 
-    private Parameters   parameters;
-    private List<Filter> filters = new ArrayList<>();
+    private Parameters      parameters;
+    private List<Filter>    filters = new ArrayList<>();
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private Phaser          phaser = new Phaser();
 
     /**
      * Конструктор скрыт. Доступ производится через static метод обработки
@@ -46,7 +51,9 @@ public class CopyDiff {
     public static void process(Parameters parameters) throws IOException {
         logger.debug("CopyDiff.process[parameters: {}]", parameters);
         // Вызываем рекурсивный обработчик, который пробегает по дереву и вызывает операцию для каждого файла
-        new CopyDiff(parameters).processPath(parameters.getSourcePath());
+        CopyDiff copyDiff = new CopyDiff(parameters);
+        copyDiff.processPath(parameters.getSourcePath());
+        copyDiff.stopOnComplete();
     }
 
     /**
@@ -66,7 +73,16 @@ public class CopyDiff {
         } else {
             logger.info("processFile: {}", relativePath);
         }
-        new CopyDiffFileProcessor(fileParams, filters).process();
+        phaser.register();
+        executorService.submit(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        new CopyDiffFileProcessor(fileParams, filters).process();
+                        phaser.arriveAndDeregister();
+                    }
+                }
+        );
     }
 
     /**
@@ -92,5 +108,12 @@ public class CopyDiff {
         }
     }
 
+    /**
+     * Функция останавливает ExecutorServices когда задача завершилась
+     */
+    public void stopOnComplete() {
+        phaser.awaitAdvance(0);
+        executorService.shutdown();
+    }
 
 }

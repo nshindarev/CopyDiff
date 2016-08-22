@@ -23,6 +23,7 @@
     1. [Многопоточность в Java: ExecutorService](https://habrahabr.ru/post/116363/)
     2. [10 советов по использованию ExecutorService](https://habrahabr.ru/post/260953/)
     3. [Java 8 Concurrency Tutorial: Threads and Executors](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
+    4. [Справочник по синхронизаторам java.util.concurrent.* (Phaser)](https://habrahabr.ru/post/277669/)
     
 5. Разное
     1. Markdown
