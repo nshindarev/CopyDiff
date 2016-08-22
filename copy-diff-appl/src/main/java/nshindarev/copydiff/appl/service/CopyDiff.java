@@ -15,6 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by nshindarev on 17.08.16.
@@ -23,8 +25,9 @@ public class CopyDiff {
 
     private static final Logger logger = LoggerFactory.getLogger(CopyDiff.class);
 
-    private Parameters   parameters;
-    private List<Filter> filters = new ArrayList<>();
+    private Parameters      parameters;
+    private List<Filter>    filters = new ArrayList<>();
+    private ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      * Конструктор скрыт. Доступ производится через static метод обработки
@@ -66,7 +69,14 @@ public class CopyDiff {
         } else {
             logger.info("processFile: {}", relativePath);
         }
-        new CopyDiffFileProcessor(fileParams, filters).process();
+        executorService.submit(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        new CopyDiffFileProcessor(fileParams, filters).process();
+                    }
+                }
+        );
     }
 
     /**
