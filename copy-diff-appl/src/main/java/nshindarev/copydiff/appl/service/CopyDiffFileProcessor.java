@@ -17,7 +17,10 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nshindarev on 20.08.16.
@@ -94,6 +97,7 @@ public class CopyDiffFileProcessor implements Checker {
             for (int readed=fileChannel.read(byteBuffer, fileOffset); readed > 0; readed=fileChannel.read(byteBuffer, fileOffset)) {
                 // Ставим границу с учётом того, до куда причитано. Далее обрабатываем только до limit
                 byteBuffer.limit(byteBuffer.position());
+                int newBufferIncomplete = 0;
                 for (ContinueFilter continueFilter : continueFilters.toArray(new ContinueFilter[] {})) {
                     if (continueFilter instanceof BufferFileFilter) {
                         @SuppressWarnings("unchecked")
@@ -103,7 +107,7 @@ public class CopyDiffFileProcessor implements Checker {
                         byteBuffer.position(bufferPosition);
                         // Берём буфер, который имитирует из нашего буфера только рабочую часть - position() в 0, а limit() в capacity()
                         ByteBuffer workedBuffer = byteBuffer.slice();
-                        Integer completed = bufferFileFilter.bufferCheck(workedBuffer, fileOffset + bufferPosition, parameters, this);
+                        Integer completed = bufferFileFilter.bufferCheck(workedBuffer, fileOffset, parameters, this);
                         if (completed == null) {
                             continueFilters.remove(bufferFileFilter);
                             completed = byteBuffer.limit();
@@ -112,9 +116,10 @@ public class CopyDiffFileProcessor implements Checker {
                         }
                         currentBufferIncomplete = byteBuffer.limit() - completed;
                         bufferIncompletes.put(bufferFileFilter, currentBufferIncomplete);
-                        bufferIncomplete = Math.max(bufferIncomplete, currentBufferIncomplete);
+                        newBufferIncomplete = Math.max(newBufferIncomplete, currentBufferIncomplete);
                     }
                 }
+                bufferIncomplete = newBufferIncomplete;
                 if (bufferIncomplete > 0) {
                     byteBuffer.position(byteBuffer.limit() - bufferIncomplete);
                     ByteBuffer slice = byteBuffer.slice();
