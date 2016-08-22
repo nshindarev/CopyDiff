@@ -68,7 +68,7 @@ public class TurboBoyerMooreTest {
     }
 
     @Test
-    public void shakespearTest() throws IOException {
+    public void shakespeareTest() throws IOException {
         Path shakespeare = Shakespeare.shakespeare();
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(16*1024);
         FileChannel fileChannel = FileChannel.open(shakespeare, StandardOpenOption.READ);

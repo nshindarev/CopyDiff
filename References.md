@@ -32,3 +32,8 @@
         * [How to Load Resources from Classpath in Java with Example](http://javarevisited.blogspot.com/2014/07/how-to-load-resources-from-classpath-in-java-example.html)
         * [Java resource loading explained. Absolute and relative names.](http://www.thinkplexx.com/learn/howto/java/system/java-resource-loading-explained-absolute-and-relative-names-difference-between-classloader-and-class-resource-loading)
         * [Java – Read a file from resources folder](https://www.mkyong.com/java/java-read-a-file-from-resources-folder/)
+        
+***
+
+Параметры для запуска из IntelliJ:
+    _-source_dir "copy-diff-test/src/test/resources" -target_dir "copy-diff-test/target/test-classes" -dest_dir "copy-diff-test/target/dest_dir"_
