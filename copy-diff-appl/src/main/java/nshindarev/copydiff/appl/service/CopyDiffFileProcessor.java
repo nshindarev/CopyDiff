@@ -130,6 +130,9 @@ public class CopyDiffFileProcessor implements Checker {
                     byteBuffer.clear();
                 }
                 fileOffset = fileOffset + readed;
+                if (Boolean.FALSE.equals(approved)) {
+                    break;
+                }
             }
         } catch (IOException ioex) {
             logger.error("Reject: Произошла ошибка при открытии файла '{}'", parameters.getSourcePath().toFile().getAbsolutePath());
@@ -141,7 +144,8 @@ public class CopyDiffFileProcessor implements Checker {
     private void checkCompletes(List<ContinueFilter> continueFilters) {
         // Проверяем CompleteFilters
         for (ContinueFilter continueFilter:continueFilters) {
-            if (continueFilter instanceof CompleteFilter) {
+            if (!Boolean.FALSE.equals(approved) &&
+                continueFilter instanceof CompleteFilter) {
                 @SuppressWarnings("unchecked")
                 CompleteFilter completeFilter = (CompleteFilter)continueFilter;
                 completeFilter.completeCheck(parameters, this);
